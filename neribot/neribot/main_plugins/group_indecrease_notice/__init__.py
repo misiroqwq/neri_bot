@@ -48,7 +48,8 @@ async def _(bot: Bot, event: GroupIncreaseNoticeEvent):
 async def _(bot: Bot, session: EventSession, event: GroupDecreaseNoticeEvent):
     user_id = str(event.user_id)
     group_id = str(event.group_id)
-    user_name = await bot.get_group_member_info(user_id=int(user_id), group_id=int(group_id))
+    user_info_dict = await bot.get_group_member_info(user_id=int(user_id), group_id=int(group_id))
+    user_name = user_info_dict["card"] or user_info_dict["nickname"]
     #群组控制
     is_group_notice = await Plugin_Rule.get_rule(plugin_name = "group_decrease_notice", session = session, check_user = False)
     
